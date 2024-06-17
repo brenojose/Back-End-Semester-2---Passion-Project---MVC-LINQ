@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Project_Passion_BrenoSouza.Models.Grocery>
+
+@{
+    ViewData["Title"] = "Groceries";
+}
+
+<div class="container">
+    <h1 class="display-4">Groceries</h1>
+    <p>
+        <a asp-action="Create" class="btn btn-success mb-3">Create New</a>
+    </p>
+    <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Ingredient</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Ingredient.Name)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.GroceryId" class="btn btn-outline-info btn-sm">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.GroceryId" class="btn btn-outline-warning btn-sm">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.GroceryId" class="btn btn-outline-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

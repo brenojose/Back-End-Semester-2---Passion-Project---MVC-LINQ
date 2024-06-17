@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Welcome to Recipe Manager";
+}
+
+<div class="jumbotron text-center">
+    <h1 class="display-4">Welcome to Recipe Manager</h1>
+    <p class="lead">Your ultimate tool for managing, organizing, and sharing recipes.</p>
+    <hr class="my-4">
+    <p>Discover new recipes, organize your groceries, and plan your meals efficiently.</p>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Explore Recipes</h5>
+                    <p class="card-text">Discover a variety of recipes to suit any taste and occasion. From appetizers to desserts, find inspiration for your next meal.</p>
+                    <a class="btn btn-primary btn-lg" href="@Url.Action("Index", "Recipes")">Explore Recipes</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Groceries</h5>
+                    <p class="card-text">Keep track of your grocery needs and ensure you have all the ingredients you need for your recipes.</p>
+                    <a class="btn btn-secondary btn-lg" href="@Url.Action("Index", "Groceries")">Manage Groceries</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Plan Your Meals</h5>
+                    <p class="card-text">Plan your meals for the week and make meal prep a breeze. Save time and stay organized with our meal planning tools.</p>
+                    <a class="btn btn-success btn-lg" href="#">Plan Your Meals</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
