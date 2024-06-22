@@ -7,6 +7,7 @@
 <div class="container">
     <h1 class="display-4">Recipes</h1>
     <p>
+        @* Link to create a new recipe *@
         <a asp-action="Create" class="btn btn-success mb-3">Create New</a>
     </p>
     <table class="table table-hover table-dark">
@@ -24,8 +25,11 @@
                     <td>@Html.DisplayFor(modelItem => item.Title)</td>
                     <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
                     <td>
+                        @* Link to edit the recipe *@
                         <a asp-action="Edit" asp-route-id="@item.RecipeId" class="btn btn-outline-info btn-sm">Edit</a>
+                        @* Link to view details of the recipe *@
                         <a asp-action="Details" asp-route-id="@item.RecipeId" class="btn btn-outline-warning btn-sm">Details</a>
+                        @* Link to delete the recipe *@
                         <a asp-action="Delete" asp-route-id="@item.RecipeId" class="btn btn-outline-danger btn-sm">Delete</a>
                     </td>
                 </tr>

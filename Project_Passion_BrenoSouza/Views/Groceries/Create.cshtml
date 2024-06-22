@@ -10,17 +10,24 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
+        @* Form for creating a new grocery item *@
         <form asp-action="Create">
             <div class="form-group">
+                @* Label for the Name field *@
                 <label asp-for="Name" class="control-label"></label>
+                @* Input for the Name field *@
                 <input asp-for="Name" class="form-control" />
+                @* Validation message for the Name field *@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
+                @* Label for the IngredientId field *@
                 <label asp-for="IngredientId" class="control-label"></label>
+                @* Dropdown for selecting the IngredientId *@
                 <select asp-for="IngredientId" class="form-control" asp-items="ViewBag.IngredientId"></select>
             </div>
             <div class="form-group">
+                @* Submit button for the form *@
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -28,11 +35,11 @@
 </div>
 
 <div>
+    @* Link to navigate back to the grocery list *@
     <a asp-action="Index">Back to List</a>
 </div>
 
-</div>
-
 <div>
+    @* Another link to navigate back to the grocery list *@
     <a asp-action="Index">Back to List</a>
 </div>

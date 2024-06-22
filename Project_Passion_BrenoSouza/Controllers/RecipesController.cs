@@ -9,21 +9,45 @@ namespace Project_Passion_BrenoSouza.Controllers
 {
     public class RecipesController : Controller
     {
+        //<summary>
+        // The database context used to interact with the recipes and categories in the database.
+        //</summary>
         private readonly ApplicationDbContext _context;
 
+        //<summary>
+        // Constructor for RecipesController that initializes the database context.
+        //</summary>
+        //<param name="context">The database context.</param>
         public RecipesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        //<summary>
+        // Displays a list of all recipes.
+        //</summary>
+        //<returns>
+        // The Index view with a list of recipes.
+        //</returns>
+        //<example>
         // GET: Recipes
+        //</example>
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Recipes.Include(r => r.Category);
             return View(await applicationDbContext.ToListAsync());
         }
 
+        //<summary>
+        // Displays the details of a specific recipe.
+        //</summary>
+        //<param name="id">The ID of the recipe to display details for.</param>
+        //<returns>
+        // The Details view with the recipe details, or NotFound if the recipe does not exist.
+        //</returns>
+        //<example>
         // GET: Recipes/Details/5
+        //</example>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,14 +66,31 @@ namespace Project_Passion_BrenoSouza.Controllers
             return View(recipe);
         }
 
+        //<summary>
+        // Displays the create recipe form.
+        //</summary>
+        //<returns>
+        // The Create view.
+        //</returns>
+        //<example>
         // GET: Recipes/Create
+        //</example>
         public IActionResult Create()
         {
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name");
             return View();
         }
 
+        //<summary>
+        // Handles the submission of the create recipe form.
+        //</summary>
+        //<param name="recipe">The recipe object to be created.</param>
+        //<returns>
+        // Redirects to the Index view upon successful creation, or displays the Create view with validation errors.
+        //</returns>
+        //<example>
         // POST: Recipes/Create
+        //</example>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RecipeId,Title,Description,CategoryId,ImageUrl,Instructions")] Recipe recipe)
@@ -64,7 +105,16 @@ namespace Project_Passion_BrenoSouza.Controllers
             return View(recipe);
         }
 
+        //<summary>
+        // Displays the edit recipe form for a specific recipe.
+        //</summary>
+        //<param name="id">The ID of the recipe to edit.</param>
+        //<returns>
+        // The Edit view with the recipe details, or NotFound if the recipe does not exist.
+        //</returns>
+        //<example>
         // GET: Recipes/Edit/5
+        //</example>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,7 +131,17 @@ namespace Project_Passion_BrenoSouza.Controllers
             return View(recipe);
         }
 
+        //<summary>
+        // Handles the submission of the edit recipe form.
+        //</summary>
+        //<param name="id">The ID of the recipe to edit.</param>
+        //<param name="recipe">The recipe object with updated details.</param>
+        //<returns>
+        // Redirects to the Index view upon successful edit, or displays the Edit view with validation errors.
+        //</returns>
+        //<example>
         // POST: Recipes/Edit/5
+        //</example>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("RecipeId,Title,Description,CategoryId,ImageUrl,Instructions")] Recipe recipe)
@@ -115,7 +175,16 @@ namespace Project_Passion_BrenoSouza.Controllers
             return View(recipe);
         }
 
+        //<summary>
+        // Displays the delete confirmation page for a specific recipe.
+        //</summary>
+        //<param name="id">The ID of the recipe to delete.</param>
+        //<returns>
+        // The Delete view with the recipe details, or NotFound if the recipe does not exist.
+        //</returns>
+        //<example>
         // GET: Recipes/Delete/5
+        //</example>
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,7 +203,16 @@ namespace Project_Passion_BrenoSouza.Controllers
             return View(recipe);
         }
 
+        //<summary>
+        // Handles the deletion of a specific recipe.
+        //</summary>
+        //<param name="id">The ID of the recipe to delete.</param>
+        //<returns>
+        // Redirects to the Index view upon successful deletion.
+        //</returns>
+        //<example>
         // POST: Recipes/Delete/5
+        //</example>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -145,6 +223,11 @@ namespace Project_Passion_BrenoSouza.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //<summary>
+        // Checks if a recipe with the specified ID exists in the database.
+        //</summary>
+        //<param name="id">The ID of the recipe to check.</param>
+        //<returns>True if the recipe exists, otherwise false.</returns>
         private bool RecipeExists(int id)
         {
             return _context.Recipes.Any(e => e.RecipeId == id);

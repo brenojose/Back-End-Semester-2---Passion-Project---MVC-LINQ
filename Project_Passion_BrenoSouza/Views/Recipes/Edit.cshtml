@@ -10,32 +10,48 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
+        @* Form for editing an existing recipe *@
         <form asp-action="Edit">
             <div class="form-group">
+                @* Label for the Title field *@
                 <label asp-for="Title" class="control-label"></label>
+                @* Input for the Title field *@
                 <input asp-for="Title" class="form-control" />
+                @* Validation message for the Title field *@
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
+                @* Label for the Description field *@
                 <label asp-for="Description" class="control-label"></label>
+                @* Input for the Description field *@
                 <input asp-for="Description" class="form-control" />
+                @* Validation message for the Description field *@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
+                @* Label for the CategoryId field *@
                 <label asp-for="CategoryId" class="control-label"></label>
+                @* Dropdown for selecting the CategoryId *@
                 <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
             </div>
             <div class="form-group">
+                @* Label for the ImageUrl field *@
                 <label asp-for="ImageUrl" class="control-label"></label>
+                @* Input for the ImageUrl field *@
                 <input asp-for="ImageUrl" class="form-control" />
+                @* Validation message for the ImageUrl field *@
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
             <div class="form-group">
+                @* Label for the Instructions field *@
                 <label asp-for="Instructions" class="control-label"></label>
+                @* Input for the Instructions field *@
                 <input asp-for="Instructions" class="form-control" />
+                @* Validation message for the Instructions field *@
                 <span asp-validation-for="Instructions" class="text-danger"></span>
             </div>
             <div class="form-group">
+                @* Submit button for the form *@
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -43,5 +59,6 @@
 </div>
 
 <div>
+    @* Link to navigate back to the recipe list *@
     <a asp-action="Index">Back to List</a>
 </div>
