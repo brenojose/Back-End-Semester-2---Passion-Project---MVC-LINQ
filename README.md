@@ -1,7 +1,7 @@
-# Recipe Manager
+# Recipe.io
 
 ## Overview
-Recipe Manager is a web application that helps you manage recipes, ingredients, and groceries. It allows you to create, read, update, and delete recipes and groceries, as well as view details and manage relationships between entities.
+Recipe.io is a web application that helps you manage recipes, ingredients, and groceries. It allows you to create, read, update, and delete recipes and groceries, as well as view details and manage relationships between entities.
 
 ## Features
 - **Recipes**: Create, read, update, delete, and view details of recipes.
