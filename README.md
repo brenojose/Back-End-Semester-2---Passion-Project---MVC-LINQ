@@ -13,6 +13,7 @@ Recipe.io is a web application that helps you manage recipes, ingredients, and g
   - ListRecipesForIngredient
   - AddIngredientToRecipe
   - RemoveIngredientFromRecipe
+  - Added 2 extra features: Login and Register Users, Rating System for the recipes.
 
 ## Installation
 1. Clone the repository:
