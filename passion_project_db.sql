@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 17, 2024 at 03:45 AM
+-- Generation Time: Jun 24, 2024 at 07:50 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -24,12 +24,49 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `aspnetroles`
+--
+
+CREATE TABLE `aspnetroles` (
+  `Id` varchar(255) NOT NULL,
+  `Name` varchar(256) DEFAULT NULL,
+  `NormalizedName` varchar(256) DEFAULT NULL,
+  `ConcurrencyStamp` longtext
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `aspnetusers`
+--
+
+CREATE TABLE `aspnetusers` (
+  `Id` varchar(255) NOT NULL,
+  `UserName` varchar(256) DEFAULT NULL,
+  `NormalizedUserName` varchar(256) DEFAULT NULL,
+  `Email` varchar(256) DEFAULT NULL,
+  `NormalizedEmail` varchar(256) DEFAULT NULL,
+  `EmailConfirmed` tinyint(1) NOT NULL,
+  `PasswordHash` longtext,
+  `SecurityStamp` longtext,
+  `ConcurrencyStamp` longtext,
+  `PhoneNumber` longtext,
+  `PhoneNumberConfirmed` tinyint(1) NOT NULL,
+  `TwoFactorEnabled` tinyint(1) NOT NULL,
+  `LockoutEnd` datetime(6) DEFAULT NULL,
+  `LockoutEnabled` tinyint(1) NOT NULL,
+  `AccessFailedCount` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categories`
 --
 
 CREATE TABLE `categories` (
   `CategoryId` int(11) NOT NULL,
-  `Name` varchar(255) NOT NULL
+  `Name` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -37,11 +74,16 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`CategoryId`, `Name`) VALUES
-(1, 'Italian'),
-(2, 'Indian'),
-(3, 'Mexican'),
-(4, 'Chinese'),
-(5, 'American');
+(1, 'Vegetables'),
+(2, 'Fruits'),
+(3, 'Dairy'),
+(4, 'Bakery'),
+(5, 'Meat'),
+(6, 'Seafood'),
+(7, 'Beverages'),
+(8, 'Snacks'),
+(9, 'Frozen'),
+(10, 'Condiments');
 
 -- --------------------------------------------------------
 
@@ -51,8 +93,7 @@ INSERT INTO `categories` (`CategoryId`, `Name`) VALUES
 
 CREATE TABLE `groceries` (
   `GroceryId` int(11) NOT NULL,
-  `Name` varchar(255) NOT NULL,
-  `MealId` int(11) NOT NULL,
+  `Name` longtext NOT NULL,
   `IngredientId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -60,12 +101,13 @@ CREATE TABLE `groceries` (
 -- Dumping data for table `groceries`
 --
 
-INSERT INTO `groceries` (`GroceryId`, `Name`, `MealId`, `IngredientId`) VALUES
-(1, 'Tomatoes', 1, 1),
-(2, 'Chicken Breast', 2, 2),
-(3, 'Ground Beef', 3, 3),
-(4, 'Broccoli', 4, 4),
-(5, 'Flour', 5, 5);
+INSERT INTO `groceries` (`GroceryId`, `Name`, `IngredientId`) VALUES
+(5, 'Chicken Breasts', 5),
+(6, 'Salmon Fillets', 6),
+(7, 'Orange Juice 1L', 7),
+(8, 'Potato Chips', 8),
+(9, 'Vanilla Ice Cream', 9),
+(10, 'Tomato Ketchup', 10);
 
 -- --------------------------------------------------------
 
@@ -75,8 +117,8 @@ INSERT INTO `groceries` (`GroceryId`, `Name`, `MealId`, `IngredientId`) VALUES
 
 CREATE TABLE `ingredients` (
   `IngredientId` int(11) NOT NULL,
-  `Name` varchar(255) NOT NULL,
-  `Unit` varchar(50) DEFAULT NULL
+  `Name` longtext NOT NULL,
+  `Unit` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -84,36 +126,29 @@ CREATE TABLE `ingredients` (
 --
 
 INSERT INTO `ingredients` (`IngredientId`, `Name`, `Unit`) VALUES
-(1, 'Tomato', 'pcs'),
-(2, 'Chicken', 'kg'),
-(3, 'Beef', 'kg'),
-(4, 'Broccoli', 'pcs'),
-(5, 'Flour', 'g');
+(1, 'Tomato', 'Piece'),
+(2, 'Carrot', 'Piece'),
+(3, 'Apple', 'Piece'),
+(4, 'Bread', 'Loaf'),
+(5, 'Chicken Breast', 'Piece'),
+(6, 'Salmon', 'Fillet'),
+(7, 'Orange Juice', 'Litre'),
+(8, 'Potato Chips', 'Bag'),
+(9, 'Ice Cream', 'Scoop'),
+(10, 'Ketchup', 'Bottle');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `meals`
+-- Table structure for table `ratings`
 --
 
-CREATE TABLE `meals` (
-  `MealId` int(11) NOT NULL,
+CREATE TABLE `ratings` (
+  `RatingId` int(11) NOT NULL,
   `RecipeId` int(11) NOT NULL,
-  `Day` varchar(100) NOT NULL,
-  `Title` varchar(100) NOT NULL,
-  `Note` text
+  `UserId` varchar(255) NOT NULL,
+  `Value` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `meals`
---
-
-INSERT INTO `meals` (`MealId`, `RecipeId`, `Day`, `Title`, `Note`) VALUES
-(1, 1, 'Monday', 'Spaghetti Night', 'Family favorite.'),
-(2, 2, 'Tuesday', 'Curry Night', 'Spicy and savory.'),
-(3, 3, 'Wednesday', 'Taco Night', 'Always a hit.'),
-(4, 4, 'Thursday', 'Stir Fry Night', 'Healthy and tasty.'),
-(5, 5, 'Friday', 'Pancake Breakfast', 'Start the weekend right.');
 
 -- --------------------------------------------------------
 
@@ -123,20 +158,18 @@ INSERT INTO `meals` (`MealId`, `RecipeId`, `Day`, `Title`, `Note`) VALUES
 
 CREATE TABLE `recipeingredients` (
   `RecipeId` int(11) NOT NULL,
-  `IngredientId` int(11) NOT NULL,
-  `Quantity` double NOT NULL
+  `IngredientId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `recipeingredients`
 --
 
-INSERT INTO `recipeingredients` (`RecipeId`, `IngredientId`, `Quantity`) VALUES
-(1, 1, 3),
-(2, 2, 1),
-(3, 3, 0.5),
-(4, 4, 2),
-(5, 5, 200);
+INSERT INTO `recipeingredients` (`RecipeId`, `IngredientId`) VALUES
+(9, 1),
+(7, 5),
+(8, 7),
+(10, 9);
 
 -- --------------------------------------------------------
 
@@ -146,49 +179,23 @@ INSERT INTO `recipeingredients` (`RecipeId`, `IngredientId`, `Quantity`) VALUES
 
 CREATE TABLE `recipes` (
   `RecipeId` int(11) NOT NULL,
-  `UserId` int(11) NOT NULL,
-  `Title` varchar(255) NOT NULL,
-  `Description` text,
+  `Title` longtext NOT NULL,
+  `Description` longtext NOT NULL,
   `CategoryId` int(11) NOT NULL,
-  `ImageUrl` varchar(255) DEFAULT NULL,
-  `Instructions` text
+  `ImageUrl` longtext NOT NULL,
+  `Instructions` longtext NOT NULL,
+  `IsFavorite` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `recipes`
 --
 
-INSERT INTO `recipes` (`RecipeId`, `UserId`, `Title`, `Description`, `CategoryId`, `ImageUrl`, `Instructions`) VALUES
-(1, 1, 'Spaghetti Bolognese', 'A classic Italian pasta dish.', 1, 'spaghetti.jpg', 'Cook pasta, prepare sauce, combine and serve.'),
-(2, 2, 'Chicken Curry', 'A spicy and savory chicken curry.', 2, 'chickencurry.jpg', 'Cook chicken, prepare curry sauce, combine and serve.'),
-(3, 3, 'Beef Tacos', 'Delicious beef tacos with fresh toppings.', 3, 'beeftacos.jpg', 'Cook beef, prepare toppings, assemble tacos and serve.'),
-(4, 4, 'Vegetable Stir Fry', 'A healthy vegetable stir fry.', 4, 'veggiestirfry.jpg', 'Stir fry vegetables, add sauce, serve with rice.'),
-(5, 5, 'Pancakes', 'Fluffy pancakes with syrup.', 5, 'pancakes.jpg', 'Prepare batter, cook pancakes, serve with syrup.');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `UserId` int(11) NOT NULL,
-  `Username` varchar(255) NOT NULL,
-  `Email` varchar(255) NOT NULL,
-  `Password` varchar(255) NOT NULL,
-  `ProfilePicture` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`UserId`, `Username`, `Email`, `Password`, `ProfilePicture`) VALUES
-(1, 'user1', 'user1@example.com', 'password1', 'profile1.jpg'),
-(2, 'user2', 'user2@example.com', 'password2', 'profile2.jpg'),
-(3, 'user3', 'user3@example.com', 'password3', 'profile3.jpg'),
-(4, 'user4', 'user4@example.com', 'password4', 'profile4.jpg'),
-(5, 'user5', 'user5@example.com', 'password5', 'profile5.jpg');
+INSERT INTO `recipes` (`RecipeId`, `Title`, `Description`, `CategoryId`, `ImageUrl`, `Instructions`, `IsFavorite`) VALUES
+(7, 'Beef Stew', 'A hearty beef stew', 5, 'url7', 'Cook beef with vegetables.', 0),
+(8, 'Orange Smoothie', 'A citrusy orange smoothie', 7, 'url8', 'Blend orange juice with ice.', 0),
+(9, 'Pasta Salad', 'A light pasta salad', 1, 'url9', 'Mix pasta with vegetables.', 0),
+(10, 'Ice Cream Sundae', 'A sweet ice cream sundae', 9, 'url10', 'Top ice cream with syrup.', 0);
 
 -- --------------------------------------------------------
 
@@ -206,6 +213,18 @@ CREATE TABLE `__efmigrationshistory` (
 --
 
 --
+-- Indexes for table `aspnetroles`
+--
+ALTER TABLE `aspnetroles`
+  ADD PRIMARY KEY (`Id`);
+
+--
+-- Indexes for table `aspnetusers`
+--
+ALTER TABLE `aspnetusers`
+  ADD PRIMARY KEY (`Id`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
@@ -216,8 +235,7 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `groceries`
   ADD PRIMARY KEY (`GroceryId`),
-  ADD KEY `MealId` (`MealId`),
-  ADD KEY `IngredientId` (`IngredientId`);
+  ADD KEY `IX_Groceries_IngredientId` (`IngredientId`);
 
 --
 -- Indexes for table `ingredients`
@@ -226,32 +244,26 @@ ALTER TABLE `ingredients`
   ADD PRIMARY KEY (`IngredientId`);
 
 --
--- Indexes for table `meals`
+-- Indexes for table `ratings`
 --
-ALTER TABLE `meals`
-  ADD PRIMARY KEY (`MealId`),
-  ADD KEY `RecipeId` (`RecipeId`);
+ALTER TABLE `ratings`
+  ADD PRIMARY KEY (`RatingId`),
+  ADD KEY `IX_Ratings_RecipeId` (`RecipeId`),
+  ADD KEY `IX_Ratings_UserId` (`UserId`);
 
 --
 -- Indexes for table `recipeingredients`
 --
 ALTER TABLE `recipeingredients`
   ADD PRIMARY KEY (`RecipeId`,`IngredientId`),
-  ADD KEY `IngredientId` (`IngredientId`);
+  ADD KEY `IX_RecipeIngredients_IngredientId` (`IngredientId`);
 
 --
 -- Indexes for table `recipes`
 --
 ALTER TABLE `recipes`
   ADD PRIMARY KEY (`RecipeId`),
-  ADD KEY `UserId` (`UserId`),
-  ADD KEY `FK_Recipes_Categories` (`CategoryId`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`UserId`);
+  ADD KEY `IX_Recipes_CategoryId` (`CategoryId`);
 
 --
 -- Indexes for table `__efmigrationshistory`
@@ -267,37 +279,31 @@ ALTER TABLE `__efmigrationshistory`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `CategoryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `CategoryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `groceries`
 --
 ALTER TABLE `groceries`
-  MODIFY `GroceryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `GroceryId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `ingredients`
 --
 ALTER TABLE `ingredients`
-  MODIFY `IngredientId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `IngredientId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `meals`
+-- AUTO_INCREMENT for table `ratings`
 --
-ALTER TABLE `meals`
-  MODIFY `MealId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `ratings`
+  MODIFY `RatingId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `recipes`
 --
 ALTER TABLE `recipes`
-  MODIFY `RecipeId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `UserId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `RecipeId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -307,28 +313,27 @@ ALTER TABLE `users`
 -- Constraints for table `groceries`
 --
 ALTER TABLE `groceries`
-  ADD CONSTRAINT `groceries_ibfk_1` FOREIGN KEY (`MealId`) REFERENCES `meals` (`MealId`),
-  ADD CONSTRAINT `groceries_ibfk_2` FOREIGN KEY (`IngredientId`) REFERENCES `ingredients` (`IngredientId`);
+  ADD CONSTRAINT `FK_Groceries_Ingredients_IngredientId` FOREIGN KEY (`IngredientId`) REFERENCES `ingredients` (`IngredientId`) ON DELETE CASCADE;
 
 --
--- Constraints for table `meals`
+-- Constraints for table `ratings`
 --
-ALTER TABLE `meals`
-  ADD CONSTRAINT `meals_ibfk_1` FOREIGN KEY (`RecipeId`) REFERENCES `recipes` (`RecipeId`);
+ALTER TABLE `ratings`
+  ADD CONSTRAINT `FK_Ratings_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `aspnetusers` (`Id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_Ratings_Recipes_RecipeId` FOREIGN KEY (`RecipeId`) REFERENCES `recipes` (`RecipeId`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `recipeingredients`
 --
 ALTER TABLE `recipeingredients`
-  ADD CONSTRAINT `recipeingredients_ibfk_1` FOREIGN KEY (`RecipeId`) REFERENCES `recipes` (`RecipeId`),
-  ADD CONSTRAINT `recipeingredients_ibfk_2` FOREIGN KEY (`IngredientId`) REFERENCES `ingredients` (`IngredientId`);
+  ADD CONSTRAINT `FK_RecipeIngredients_Ingredients_IngredientId` FOREIGN KEY (`IngredientId`) REFERENCES `ingredients` (`IngredientId`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_RecipeIngredients_Recipes_RecipeId` FOREIGN KEY (`RecipeId`) REFERENCES `recipes` (`RecipeId`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `recipes`
 --
 ALTER TABLE `recipes`
-  ADD CONSTRAINT `FK_Recipes_Categories` FOREIGN KEY (`CategoryId`) REFERENCES `categories` (`CategoryId`),
-  ADD CONSTRAINT `recipes_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `users` (`UserId`);
+  ADD CONSTRAINT `FK_Recipes_Categories_CategoryId` FOREIGN KEY (`CategoryId`) REFERENCES `categories` (`CategoryId`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
