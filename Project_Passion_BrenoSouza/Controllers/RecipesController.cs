@@ -232,5 +232,41 @@ namespace Project_Passion_BrenoSouza.Controllers
         {
             return _context.Recipes.Any(e => e.RecipeId == id);
         }
+
+        // Action to mark a recipe as favorite
+        [HttpPost]
+        public async Task<IActionResult> ToggleFavorite(int id)
+        {
+            var recipe = await _context.Recipes.FindAsync(id);
+            if (recipe == null)
+            {
+                return NotFound();
+            }
+
+            recipe.IsFavorite = !recipe.IsFavorite;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Action to view favorite recipes
+        public async Task<IActionResult> Favorites()
+        {
+            var favoriteRecipes = await _context.Recipes.Where(r => r.IsFavorite).ToListAsync();
+            return View(favoriteRecipes);
+        }
+
+        // Action to handle search
+        public async Task<IActionResult> Search(string query)
+        {
+            var recipes = string.IsNullOrEmpty(query)
+                ? await _context.Recipes.Include(r => r.Category).ToListAsync()
+                : await _context.Recipes
+                    .Include(r => r.Category)
+                    .Where(r => r.Title.Contains(query) || r.Description.Contains(query) || r.RecipeIngredients.Any(i => i.Ingredient.Name.Contains(query)))
+                    .ToListAsync();
+
+            return View("Index", recipes); // Reuse the Index view to display search results
+        }
     }
 }

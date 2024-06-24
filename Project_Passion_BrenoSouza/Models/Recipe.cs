@@ -41,5 +41,10 @@
         // The collection of recipe ingredients associated with this recipe.
         //</summary>
         public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
+
+        //<summary>
+        // Indicates whether the recipe is a favorite.
+        //</summary>
+        public bool IsFavorite { get; set; } // New property
     }
 }
