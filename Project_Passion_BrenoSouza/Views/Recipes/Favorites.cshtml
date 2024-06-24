@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Project_Passion_BrenoSouza.Models.Recipe>
+
+<h2>Favorite Recipes</h2>
+<ul>
+    @foreach (var recipe in Model)
+    {
+        <li>@recipe.Title</li>
+    }
+</ul>

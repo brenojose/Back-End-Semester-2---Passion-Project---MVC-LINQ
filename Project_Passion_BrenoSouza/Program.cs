@@ -11,6 +11,12 @@ var connectionString = builder.Configuration.GetConnectionString("MvcConnectionS
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
+// Add IHttpClientFactory
+builder.Services.AddHttpClient();
+
+// Specify the URL and port for the application to listen on
+builder.WebHost.UseUrls("http://localhost:5070");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

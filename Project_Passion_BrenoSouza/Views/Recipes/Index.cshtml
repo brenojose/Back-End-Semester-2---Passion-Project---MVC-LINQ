@@ -7,9 +7,17 @@
 <div class="container">
     <h1 class="display-4">Recipes</h1>
     <p>
-        @* Link to create a new recipe *@
+        <!-- Link to create a new recipe -->
         <a asp-action="Create" class="btn btn-success mb-3">Create New</a>
     </p>
+    <form asp-action="Search" method="get" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="query" class="form-control" placeholder="Search recipes..." />
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
     <table class="table table-hover table-dark">
         <thead>
             <tr>
@@ -25,12 +33,18 @@
                     <td>@Html.DisplayFor(modelItem => item.Title)</td>
                     <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
                     <td>
-                        @* Link to edit the recipe *@
+                        <!-- Link to edit the recipe -->
                         <a asp-action="Edit" asp-route-id="@item.RecipeId" class="btn btn-outline-info btn-sm">Edit</a>
-                        @* Link to view details of the recipe *@
+                        <!-- Link to view details of the recipe -->
                         <a asp-action="Details" asp-route-id="@item.RecipeId" class="btn btn-outline-warning btn-sm">Details</a>
-                        @* Link to delete the recipe *@
+                        <!-- Link to delete the recipe -->
                         <a asp-action="Delete" asp-route-id="@item.RecipeId" class="btn btn-outline-danger btn-sm">Delete</a>
+                        <!-- Form to toggle favorite status -->
+                        <form asp-action="ToggleFavorite" asp-route-id="@item.RecipeId" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-outline-@(item.IsFavorite ? "primary" : "secondary") btn-sm">
+                                @(item.IsFavorite ? "Unfavorite" : "Favorite")
+                            </button>
+                        </form>
                     </td>
                 </tr>
             }
